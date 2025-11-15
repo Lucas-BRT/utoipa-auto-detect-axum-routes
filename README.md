@@ -1,14 +1,16 @@
 # Utoipa Auto Detect Axum
 
-Este repositório serve como um exemplo de como detectar automaticamente o framework Axum usando a biblioteca Utoipa em Rust.
+[![Portuguese](https://img.shields.io/badge/language-Portuguese-blue.svg)](README-pt.md)
 
-## Introdução
+This repository serves as an example of how to automatically detect the Axum framework using the Utoipa library in Rust.
 
-Utoipa é uma biblioteca poderosa para gerar documentação OpenAPI para APIs web em Rust. Este projeto demonstra como integrar Utoipa com o framework Axum, permitindo a geração automática de documentação para endpoints definidos em Axum, sem a necessidade de configuração manual extensa.
+## Introduction
 
-## Requisitos
+Utoipa is a powerful library for generating OpenAPI documentation for web APIs in Rust. This project demonstrates how to integrate Utoipa with the Axum framework, allowing for the automatic generation of documentation for endpoints defined in Axum, without the need for extensive manual configuration.
 
-O projeto foi testado usando Rust 1.91.0 Stable e as seguintes dependências:
+## Requirements
+
+The project was tested using Rust 1.91.0 Stable and the following dependencies:
 
 ```toml
 axum = "0.8.7"
@@ -20,4 +22,4 @@ utoipa-swagger-ui = { version = "9.0.2", features = ["axum"] }
 
 ## Disclaimer
 
-Este repositório é apenas um exemplo simples para demonstrar a detecção automática do Axum com Utoipa. Ele não deve ser usado em produção sem antes revisar e adaptar o código conforme necessário para atender aos requisitos específicos do seu projeto. Além de não conter testes automatizados, integração com authenticação, ou outras funcionalidades essenciais para uma aplicação web robusta, caso queira incorporar essas funcionalidades, consulte a documentação oficial do Utoipa e do Axum e sinta-se à vontade para contribuir com melhorias.
+This repository is just a simple example to demonstrate the automatic detection of Axum with Utoipa. It should not be used in production without first reviewing and adapting the code as necessary to meet the specific requirements of your project. In addition to not containing automated tests, integration with authentication, or other essential features for a robust web application, if you want to incorporate these functionalities, consult the official documentation of Utoipa and Axum and feel free to contribute with improvements.
