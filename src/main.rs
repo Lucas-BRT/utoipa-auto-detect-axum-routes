@@ -12,6 +12,11 @@ const PORT: u16 = 3000;
 ))]
 struct ApiDoc;
 
+#[utoipa::path(get, path = "/health")]
+async fn health_check() -> (StatusCode, String) {
+    (StatusCode::OK, "OK".to_string())
+}
+
 #[utoipa::path(get, path = "/hello")]
 async fn hello() -> (StatusCode, String) {
     (StatusCode::OK, "Hello, world!".to_string())
@@ -33,6 +38,7 @@ fn main_router() -> OpenApiRouter {
     OpenApiRouter::new()
         .routes(routes!(say))
         .routes(routes!(hello))
+        .routes(routes!(health_check))
 }
 
 async fn setup_tcp_listener() -> TcpListener {
@@ -49,16 +55,16 @@ async fn launch_server(listener: TcpListener, router: Router) {
 async fn main() {
     let listener = setup_tcp_listener().await;
 
-    let openapi_router = OpenApiRouter::with_openapi(ApiDoc::openapi()).merge(main_router());
+    let (router, doc) = OpenApiRouter::with_openapi(ApiDoc::openapi())
+        .merge(main_router())
+        .split_for_parts();
 
-    let (router, doc) = openapi_router.split_for_parts();
-
-    println!("api docs: {:#?}", doc.paths.paths.keys());
-
+    println!("routes: {:#?}", doc.paths.paths.keys());
     println!(
         "server launched at http://{}:{}/",
         Ipv4Addr::LOCALHOST,
         PORT
     );
+
     launch_server(listener, router).await;
 }
