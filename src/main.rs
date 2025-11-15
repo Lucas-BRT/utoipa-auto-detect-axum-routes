@@ -3,6 +3,7 @@ use std::net::Ipv4Addr;
 use tokio::net::TcpListener;
 use utoipa::OpenApi;
 use utoipa_axum::{router::OpenApiRouter, routes};
+use utoipa_swagger_ui::SwaggerUi;
 
 const PORT: u16 = 3000;
 
@@ -59,7 +60,8 @@ async fn main() {
         .merge(main_router())
         .split_for_parts();
 
-    println!("routes: {:#?}", doc.paths.paths.keys());
+    let router = router.merge(SwaggerUi::new("/docs").url("/api-docs/openapi.json", doc));
+
     println!(
         "server launched at http://{}:{}/",
         Ipv4Addr::LOCALHOST,
