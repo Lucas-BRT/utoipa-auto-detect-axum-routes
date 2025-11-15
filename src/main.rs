@@ -2,6 +2,7 @@ use std::net::Ipv4Addr;
 
 use axum::{
     Router,
+    extract::Path,
     http::StatusCode,
     routing::{get, post},
     serve,
@@ -14,8 +15,15 @@ async fn hello() -> (StatusCode, String) {
     (StatusCode::OK, "Hello, world!".to_string())
 }
 
+async fn say(Path(text): Path<String>) -> (StatusCode, String) {
+    println!("{text}");
+    (StatusCode::OK, text)
+}
+
 fn main_router() -> Router {
-    Router::new().route("/hello", get(hello))
+    Router::new()
+        .route("/hello", get(hello))
+        .route("/say/{text}", post(say))
 }
 
 async fn setup_tcp_listener() -> TcpListener {
@@ -34,7 +42,7 @@ async fn main() {
     let listener = setup_tcp_listener().await;
 
     println!(
-        "server launched at http://{}:{}/hello",
+        "server launched at http://{}:{}/",
         Ipv4Addr::LOCALHOST,
         PORT
     );
